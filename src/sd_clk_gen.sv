@@ -10,7 +10,7 @@ module sd_clk_gen (
     if (!res_n) count <= 0;
     else begin
       count <= count + 1;
-      if (speed == 1) sd_clk <= clk;
+      if (speed == 1) sd_clk <= ~sd_clk;
       else begin
         if (count == 61) begin
           sd_clk <= ~sd_clk;

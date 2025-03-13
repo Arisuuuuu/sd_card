@@ -13,7 +13,9 @@ module sd_card_tb ();
   logic spi_cmd;
   logic spi_busy;
   logic spi_error;
-  logic [47:0] spi_response;
+  logic [7:0] spi_response;
+  logic spi_avail;
+  logic [9:0] spi_bytes;
 
   logic card_MOSI;
   logic card_MISO;
@@ -28,8 +30,11 @@ module sd_card_tb ();
     #100;
     spi_cmd <= 1'b1;
     spi_cmd_data <= 48'h4000000095;
-    #10000;
+    spi_bytes <= 9'd6;
+    #100000;
     card_MISO <= 1'b0;
+    #100000;
+    card_MISO <= 1'b1;
 
     #10000000 $finish;
   end
@@ -54,8 +59,11 @@ module sd_card_tb ();
       .spi_busy(spi_busy),
       .spi_error(spi_error),
       .spi_response(spi_response),
+      .spi_avail(spi_avail),
+      .spi_bytes_expected(spi_bytes),
       .card_MOSI(card_MOSI),
       .card_MISO(card_MISO),
       .card_CS(card_CS)
+
   );
 endmodule
