@@ -4,7 +4,7 @@ module sd_card_tb ();
 
 
   logic clk = 0;
-  logic sd_clk;
+  logic [7:0] sd_clk;
   logic res_n = 0;
   logic speed = 0;
 
@@ -45,14 +45,12 @@ module sd_card_tb ();
   end
 
   sd_clk_gen sd_clock (
-      .res_n(res_n),
       .clk(clk),
-      .sd_clk(sd_clk),
-      .speed(speed)
+      .clk_out(sd_clk)
   );
 
   sd_spi_output_init spi_init (
-      .clk(sd_clk),
+      .clk(sd_clk[7]),
       .res_n(res_n),
       .spi_cmd_data(spi_cmd_data),
       .spi_cmd(spi_cmd),

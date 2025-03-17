@@ -26,7 +26,7 @@ module sd_spi_output_init (
     RECV_RESPONSE
   } state_t;
 
-  state_t state = IDLE;
+  (* DONT_TOUCH = "TRUE" *) state_t state = IDLE;
 
   //some registers needed
   logic [47:0] spi_cmd_reg;
@@ -43,6 +43,7 @@ module sd_spi_output_init (
           spi_busy  <= 1'b0;
           spi_avail <= 1'b0;
           card_CS   <= 1'b1;
+          card_MOSI <= 1'b1;
           if (spi_cmd) begin
             spi_busy <= 1'b1;
             spi_cmd_reg <= spi_cmd_data;
@@ -63,6 +64,7 @@ module sd_spi_output_init (
         end
 
         WAIT_RESPONSE: begin
+          card_MOSI <= 1'b1;
           if (card_MISO == 1'b0) begin
             spi_resp_reg[current_bit] <= card_MISO;
             state <= RECV_RESPONSE;

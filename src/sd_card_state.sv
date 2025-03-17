@@ -42,7 +42,7 @@ module sd_card_state (
     ERROR
   } state_t;
 
-  state_t state = START;
+  (* DONT_TOUCH = "TRUE" *) state_t state = START;
   state_t state_after_response = IDLE;
   state_t expected_response = R1;
 
